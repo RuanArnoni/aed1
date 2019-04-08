@@ -35,14 +35,19 @@ void imprime_pessoas(int *CPaux, PESSOA *apontapessoaaux, int aux)
 {
     apontapessoaaux = (PESSOA*)(CPaux + 1);
     aux--;
-    while(aux>0)
+    if(aux==0){
+        printf("%s, %d anos, matricula %li\n", apontapessoaaux->nome, apontapessoaaux->idade, apontapessoaaux->matricula);
+    }else
+    {
+    do
     {
         printf("%s, %d anos, matricula %li\n", apontapessoaaux->nome, apontapessoaaux->idade, apontapessoaaux->matricula);
         apontapessoaaux++;
         aux--;
-    }
-    printf("%s, %d anos, matricula %li\n", apontapessoaaux->nome, apontapessoaaux->idade, apontapessoaaux->matricula);
+    }while(aux>0);
 
+    printf("%s, %d anos, matricula %li\n", apontapessoaaux->nome, apontapessoaaux->idade, apontapessoaaux->matricula);
+    }
 }
 
 int main()
@@ -66,7 +71,8 @@ int main()
         switch(*seletor)
         {
         case(1):
-            *CP++;
+            printf("Valor de cp %d", *CP);
+            *CP = *CP +1;
             realoca_buffer(seletor, CP, *CP, pBuffer, apontapessoa);
             preenche_dados(apontapessoa);
             break;
@@ -89,13 +95,9 @@ int main()
             }
             break;
         case(4):
-
+            return 0;
             break;
-
         }
-        if(*seletor!=(1 || 2 || 3 || 4))
-        {
-            printf("Valor nao permitido, digite novamente.\n\n");
-        }
+    
     }
 }
