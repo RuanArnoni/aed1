@@ -135,6 +135,8 @@ void remove_pessoa(){
     apontapessoa = pBuffer + sizeof(VARIAVEIS) +(sizeof(PESSOA)*((pVar->contador)));
     for((pVar->i)=0; (pVar->i)<=(((pVar->CP)-(pVar->contador))-1); (pVar->i)++){
         strcpy(pAux->nome,apontapessoa->nome);
+        pAux->idade = apontapessoa->idade;
+        pAux->matricula = apontapessoa->matricula;
         if((pVar->i)<(((pVar->CP)-(pVar->contador))-1)){
         apontapessoa++;
         pAux++;
@@ -145,3 +147,7 @@ void remove_pessoa(){
     }
     printf("Pessoa removida com sucesso!\n");
 }
+
+/*void ordena_contatos(){
+    
+}*/
