@@ -92,6 +92,11 @@ void preenche_dados()
 {
     printf("Digite o nome da pessoa: ");
     fgets(apontapessoa->nome, 50, stdin);
+    for((pVar->i)=0; (pVar->i)<(strlen(apontapessoa->nome)); (pVar->i)++){
+        if(apontapessoa->nome[pVar->i]=='\n'){
+            apontapessoa->nome[(pVar->i)]='\0';
+        }
+    }
     printf("Digite sua idade:");
     scanf("%d", &apontapessoa->idade);
     printf("Digite sua matricula:");
@@ -118,7 +123,7 @@ void imprime_pessoas()
 
 void remove_pessoa(){
     imprime_pessoas();
-    printf("\nDigite a pessoa que você deseja remover: ");
+    printf("\nDigite o numero da pessoa que você deseja remover: ");
     scanf("%d", &pVar->contador);
     getchar();
     if((pVar->contador)==(pVar->CP)){
