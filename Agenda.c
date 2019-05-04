@@ -4,7 +4,7 @@
 
 //struct de pessoas
 typedef struct
-{
+{   
     char nome[50];
     int idade;
     long int matricula;
@@ -83,7 +83,7 @@ int main()
 
 void realoca_buffer()
 {
-    pBuffer= realloc(pBuffer, sizeof(VARIAVEIS) + (pVar->CP)*sizeof(PESSOA));
+    pBuffer= realloc(pBuffer, sizeof(VARIAVEIS) + (pVar->CP)*sizeof(PESSOA) + sizeof(char)*(pVar->tam));
     pVar = pBuffer;
     apontapessoa = pBuffer + sizeof(VARIAVEIS) + (pVar->CP)*sizeof(PESSOA) - sizeof(PESSOA) ;
 }
