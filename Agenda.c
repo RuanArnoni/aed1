@@ -29,6 +29,7 @@ void remove_pessoa();
 
 int main()
 {
+    printf("oi");
     pBuffer = malloc(sizeof(VARIAVEIS) + sizeof(PESSOA));
     if(pBuffer==NULL)
     {
