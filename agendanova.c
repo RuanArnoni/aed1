@@ -25,7 +25,7 @@ void lista_pessoas();
 void remove_pessoa();
 void preenche_dados();
 
-int main(){
+void main(){
     pBuffer = malloc(sizeof(VARIAVEIS));
     if(pBuffer==NULL){
         printf("Malloc deu errado.");
