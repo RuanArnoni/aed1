@@ -10,20 +10,20 @@ typedef struct pessoa{
 
 //struct de variaveis que utilizarei
 typedef struct variaveis{
-    int seletor;
-    int CP;
-    int i;
+    int seletor, CP, i, cont;
 }VARIAVEIS;
 
 //declaração de ponteiros
 VARIAVEIS *pAux;
 PESSOA *apontapessoa;
+PESSOA *apontapessoaaux;
 void *pBuffer;
 
 //declaração de funções
-void adiciona_pessoa();
+void realoca_buffer();
 void lista_pessoas();
 void remove_pessoa();
+void preenche_dados();
 
 int main(){
     pBuffer = malloc(sizeof(VARIAVEIS));
@@ -34,15 +34,18 @@ int main(){
     pAux->CP=0;
     pAux->seletor=0;
     pAux->i=0;
+    pAux->cont=0;
+    printf("~~AGENDA~~");
     while(1){
-    printf("~~AGENDA~~\n\nDigite o que voce deseja:\n1)Adicionar pessoa\n2)Remover pessoa\n3)Listar\n4)Sair\n\n");
+    printf("\nDigite o que voce deseja:\n1)Adicionar pessoa\n2)Remover pessoa\n3)Listar\n4)Sair\n\n");
         scanf("%d", &pAux->seletor);
         getchar();
     switch (pAux->seletor)
     {
     case (1):
         (pAux->CP)++;
-        adiciona_pessoa();
+        realoca_buffer();
+        preenche_dados();
         break;
     case (2):
         remove_pessoa();
@@ -62,9 +65,10 @@ int main(){
         printf("Valor digitado nao permitido.\n");
     }
     }
+    free(pBuffer);
 }
 
-void adiciona_pessoa(){
+void realoca_buffer(){
     //realocando buffer para adicionar uma nova pessoa
     pBuffer = realloc(pBuffer, sizeof(VARIAVEIS)+sizeof(PESSOA)*(pAux->CP));
         if(pBuffer == NULL){
@@ -72,7 +76,8 @@ void adiciona_pessoa(){
         }
     pAux = pBuffer;
     apontapessoa = pBuffer + sizeof(VARIAVEIS) + sizeof(PESSOA)*(pAux->CP) - sizeof(PESSOA);
-    //preenchimento de dados da pessoa
+}
+void preenche_dados(){
     printf("Digite o nome da pessoa: ");
     fgets(apontapessoa->nome,50,stdin);
     for((pAux->i)=0; (pAux->i)<(strlen(apontapessoa->nome)); (pAux->i)++){
@@ -82,6 +87,11 @@ void adiciona_pessoa(){
     }
     printf("Digite a idade da pessoa: ");
     scanf("%d", &apontapessoa->idade);
+    while((apontapessoa->idade)<=0 || (apontapessoa->idade)>100){
+        printf("Idade digitada nao permitida.\n");
+        printf("Digite a idade da pessoa: ");
+        scanf("%d", &apontapessoa->idade);
+    }
     printf("Digite a matricula da pessoa: ");
     scanf("%li", &apontapessoa->matricula);
     printf("\nPessoa adicionada com sucesso!\n");
@@ -97,8 +107,34 @@ void lista_pessoas(){
 }
 
 void remove_pessoa(){
-    
+    printf("\nPessoas para serem removidas:\n");
+    lista_pessoas();
+    printf("Digite a pessoa que deseja remover: ");
+    scanf("%d", &pAux->cont);
+    while((pAux->cont)<=0 || (pAux->cont)>(pAux->CP)){
+        printf("Valor digitado para pessoa ser removida nao permitido.\n");
+        printf("Digite a pessoa que deseja remover: ");
+        scanf("%d", &pAux->cont);
+        }
+    if(pAux->cont==pAux->CP){
+        pAux->CP--;
+        realoca_buffer();
+        printf("Pessoa removida com sucesso!\n");
+    }else{
+        apontapessoa = pBuffer + sizeof(VARIAVEIS) + sizeof(PESSOA)*pAux->cont - sizeof(PESSOA);
+        apontapessoaaux = pBuffer + sizeof(VARIAVEIS) + sizeof(PESSOA)*pAux->cont;
+        for(pAux->i=0; (pAux->i)<((pAux->CP)-(pAux->cont)-1);(pAux->i)++){
+            strcpy(apontapessoa->nome, apontapessoaaux->nome);
+            apontapessoa->idade = apontapessoaaux->idade;
+            apontapessoa->matricula = apontapessoaaux->matricula;
+            apontapessoa++;
+            apontapessoaaux++;
+        }
+        strcpy(apontapessoa->nome, apontapessoaaux->nome);
+        apontapessoa->idade = apontapessoaaux->idade;
+        apontapessoa->matricula = apontapessoaaux->matricula;
+        pAux->CP--;
+        realoca_buffer();
+        printf("Pessoa removida com sucesso!\n");
+        }
 }
-
-
-
