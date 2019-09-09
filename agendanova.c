@@ -35,7 +35,7 @@ void main(){
     pAux->seletor=0;
     pAux->i=0;
     pAux->cont=0;
-    printf("~~AGENDA~~");
+    printf("~~AGENDA 2019/2~~");
     while(1){
     printf("\nDigite o que voce deseja:\n1)Adicionar pessoa\n2)Remover pessoa\n3)Listar\n4)Sair\n\n");
         scanf("%d", &pAux->seletor);
