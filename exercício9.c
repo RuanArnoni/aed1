@@ -3,7 +3,8 @@
 #include <time.h>
 
 void ler_aposta(int *aposta, int n){
-    int aux, cont = 0;
+    int aux=0;
+    int cont = 0;
     int *inicio;
     inicio = aposta;
     printf("Digite os numeros a serem apostados(apenas valores entre 0 e 100 serao considerados): ");
@@ -19,8 +20,8 @@ void ler_aposta(int *aposta, int n){
 }
 
 void sorteia_valores(int *sorteio, int n){
+    srand(time(NULL));
     for(int i=0; i<n; i++){
-        srand(time(NULL));
         sorteio[i] = rand() % 100;
       }
 }
@@ -31,7 +32,7 @@ int *compara_aposta(int *aposta, int *sorteio, int *qtdacertos, int na, int ns){
     for(int i=0; i<na; i++){
         for(int j=0; j<ns; j++){
             if(aposta[i]==sorteio[j]){
-                *qtdacertos++;
+                (*qtdacertos)++; //possivel erro
             }
         }
     }
