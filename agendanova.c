@@ -10,7 +10,7 @@ typedef struct pessoa{
 
 //struct de variaveis que utilizarei
 typedef struct variaveis{
-    int seletor, CP, i, j, cont, selectalgo, tmp, tam;
+    int seletor, CP, i, j, cont, selectalgo, tmp, tam, min, min_id;
     char nomeaux[50];
     long int matriculaaux;
 }VARIAVEIS;
@@ -28,6 +28,7 @@ void lista_pessoas();
 void remove_pessoa();
 void preenche_dados();
 void insertion_sort();
+void selection_sort();
 
 int main(){
     pBuffer = malloc(sizeof(VARIAVEIS));
@@ -62,10 +63,13 @@ int main(){
         }
         break;
     case (4):
-        printf("Digite o algoritmo de ordenacao q deseja usar:\n1)Insertion Sort\n");
+        printf("Digite o algoritmo de ordenacao q deseja usar:\n1)Insertion Sort\n2)Selection Sort\n");
         scanf("%d", &pAux->selectalgo);
         if((pAux->selectalgo)==1){
             insertion_sort();
+        }
+        if((pAux->selectalgo)==2){
+            selection_sort();
         }
         break;
     case (5):
@@ -172,5 +176,28 @@ void insertion_sort(){
             strcpy(apontapessoaaux1->nome, pAux->nomeaux);
             apontapessoaaux1->idade = pAux->tmp;
             apontapessoaaux1->matricula = pAux->matriculaaux;
+    }
+}
+
+void selection_sort(){
+    pAux->tam = pAux->CP;
+    for((pAux->i)=0; (pAux->i)<(pAux->tam)-1; (pAux->i)++){
+        apontapessoa = pBuffer + sizeof(VARIAVEIS)+sizeof(PESSOA)*(pAux->i);
+        strcpy(pAux->nomeaux, apontapessoa->nome);
+        pAux->tmp = apontapessoa->idade;
+        pAux->matriculaaux = apontapessoa->matricula;
+        pAux->min = apontapessoa->idade;
+        for((pAux->j)=(pAux->i)+1; (pAux->j)<(pAux->tam); (pAux->j)++){
+            apontapessoaaux = pBuffer + sizeof(VARIAVEIS)+sizeof(PESSOA)*(pAux->j);
+            if((apontapessoaaux->idade)<(pAux->min)){
+                pAux->min = apontapessoaaux->idade;
+                strcpy(apontapessoa->nome, apontapessoaaux->nome);
+                apontapessoa->idade = apontapessoaaux->idade;
+                apontapessoa->matricula = apontapessoaaux->matricula;
+                strcpy(apontapessoaaux->nome, pAux->nomeaux);
+                apontapessoaaux->idade = pAux->tmp;
+                apontapessoaaux->matricula = pAux->matriculaaux;
+            }
+        }  
     }
 }
