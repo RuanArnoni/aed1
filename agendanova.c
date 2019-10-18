@@ -29,6 +29,7 @@ void remove_pessoa();
 void preenche_dados();
 void insertion_sort();
 void selection_sort();
+void bubble_sort();
 
 int main(){
     pBuffer = malloc(sizeof(VARIAVEIS));
@@ -63,13 +64,16 @@ int main(){
         }
         break;
     case (4):
-        printf("Digite o algoritmo de ordenacao q deseja usar:\n1)Insertion Sort\n2)Selection Sort\n");
+        printf("Digite o algoritmo de ordenacao q deseja usar:\n1)Insertion Sort\n2)Selection Sort\n3)Bubble sort\n");
         scanf("%d", &pAux->selectalgo);
         if((pAux->selectalgo)==1){
             insertion_sort();
         }
         if((pAux->selectalgo)==2){
             selection_sort();
+        }
+        if((pAux->selectalgo)==3){
+            bubble_sort();
         }
         break;
     case (5):
@@ -199,5 +203,26 @@ void selection_sort(){
                 apontapessoaaux->matricula = pAux->matriculaaux;
             }
         }  
+    }
+}
+
+void bubble_sort(){
+    pAux->tam = pAux->CP;
+    for((pAux->i)=0; (pAux->i)<(pAux->tam)-1; (pAux->i)++){
+        for((pAux->j)=0; (pAux->j)<(pAux->tam)-(pAux->i)-1; (pAux->j)++){
+            apontapessoa = pBuffer + sizeof(VARIAVEIS) + sizeof(PESSOA)*(pAux->j);
+            apontapessoaaux = apontapessoa+1;
+            if((apontapessoa->idade)>(apontapessoaaux->idade)){
+                strcpy(pAux->nomeaux, apontapessoa->nome);
+                pAux->tmp = apontapessoa->idade;
+                pAux->matriculaaux = apontapessoa->matricula;
+                strcpy(apontapessoa->nome, apontapessoaaux->nome);
+                apontapessoa->idade = apontapessoaaux->idade;
+                apontapessoa->matricula = apontapessoaaux->matricula;
+                strcpy(apontapessoaaux->nome, pAux->nomeaux);
+                apontapessoaaux->idade = pAux->tmp;
+                apontapessoaaux->matricula = pAux->matriculaaux;
+            }
+        }
     }
 }
