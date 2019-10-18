@@ -10,13 +10,16 @@ typedef struct pessoa{
 
 //struct de variaveis que utilizarei
 typedef struct variaveis{
-    int seletor, CP, i, cont;
+    int seletor, CP, i, j, cont, selectalgo, tmp, tam;
+    char nomeaux[50];
+    long int matriculaaux;
 }VARIAVEIS;
 
 //declaração de ponteiros
 VARIAVEIS *pAux;
 PESSOA *apontapessoa;
 PESSOA *apontapessoaaux;
+PESSOA *apontapessoaaux1;
 void *pBuffer;
 
 //declaração de funções
@@ -24,8 +27,9 @@ void realoca_buffer();
 void lista_pessoas();
 void remove_pessoa();
 void preenche_dados();
+void insertion_sort();
 
-void main(){
+int main(){
     pBuffer = malloc(sizeof(VARIAVEIS));
     if(pBuffer==NULL){
         printf("Malloc deu errado.");
@@ -37,7 +41,7 @@ void main(){
     pAux->cont=0;
     printf("~~AGENDA 2019/2~~");
     while(1){
-    printf("\nDigite o que voce deseja:\n1)Adicionar pessoa\n2)Remover pessoa\n3)Listar\n4)Sair\n\n");
+    printf("\nDigite o que voce deseja:\n1)Adicionar pessoa\n2)Remover pessoa\n3)Listar\n4)Ordenar\n5)Sair\n\n");
         scanf("%d", &pAux->seletor);
         getchar();
     switch (pAux->seletor)
@@ -58,6 +62,13 @@ void main(){
         }
         break;
     case (4):
+        printf("Digite o algoritmo de ordenacao q deseja usar:\n1)Insertion Sort\n");
+        scanf("%d", &pAux->selectalgo);
+        if((pAux->selectalgo)==1){
+            insertion_sort();
+        }
+        break;
+    case (5):
         return 0;
         break;
     }
@@ -137,4 +148,29 @@ void remove_pessoa(){
         realoca_buffer();
         printf("Pessoa removida com sucesso!\n");
         }
+}
+
+void insertion_sort(){
+    pAux->tam = pAux->CP;
+    for(pAux->j = 1; (pAux->j)<(pAux->tam); (pAux->j)++){
+        pAux->i = (pAux->j)-1;
+        apontapessoa = pBuffer + sizeof(VARIAVEIS) + sizeof(PESSOA)*(pAux->j);//ponteiro do j
+        apontapessoaaux = apontapessoa-1;//ponteiro do i
+        apontapessoaaux1 = apontapessoaaux;
+        strcpy(pAux->nomeaux, apontapessoa->nome);
+        pAux->tmp = apontapessoa->idade;
+        pAux->matriculaaux = apontapessoa->matricula;
+            while(((pAux->i)>=0) && (pAux->tmp)<(apontapessoaaux->idade)){
+                apontapessoaaux1 = apontapessoaaux+1;
+                strcpy(apontapessoaaux1->nome, apontapessoaaux->nome);
+                apontapessoaaux1->idade = apontapessoaaux->idade;
+                apontapessoaaux1->matricula = apontapessoaaux->matricula;
+                apontapessoaaux--;
+                (pAux->i)--;
+            }
+            apontapessoaaux1 = apontapessoaaux+1;
+            strcpy(apontapessoaaux1->nome, pAux->nomeaux);
+            apontapessoaaux1->idade = pAux->tmp;
+            apontapessoaaux1->matricula = pAux->matriculaaux;
+    }
 }
